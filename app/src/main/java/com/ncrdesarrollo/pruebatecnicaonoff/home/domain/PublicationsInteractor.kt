@@ -8,4 +8,8 @@ class PublicationsInteractor @Inject constructor(private val repository: IPublic
     override suspend fun getPublications(): List<Publication> {
         return repository.getPublications()
     }
+
+    override suspend fun getPublicationsDatabase(): List<Publication> {
+        return repository.getPublicationsDatabase()
+    }
 }

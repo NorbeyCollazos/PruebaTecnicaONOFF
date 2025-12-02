@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
-                    viewModel.getPublications()
+                    viewModel.getPublicationsDatabase()
                 }
             }
         }

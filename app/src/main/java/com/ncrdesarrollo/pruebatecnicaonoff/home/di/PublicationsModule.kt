@@ -4,6 +4,7 @@ import com.ncrdesarrollo.pruebatecnicaonoff.home.data.IPublicationsDataSource
 import com.ncrdesarrollo.pruebatecnicaonoff.home.data.PublicationsApiService
 import com.ncrdesarrollo.pruebatecnicaonoff.home.data.PublicationsDataSource
 import com.ncrdesarrollo.pruebatecnicaonoff.home.data.PublicationsRepository
+import com.ncrdesarrollo.pruebatecnicaonoff.home.data.roomdatabase.PublicationsDao
 import com.ncrdesarrollo.pruebatecnicaonoff.home.domain.IPublicationsInteractor
 import com.ncrdesarrollo.pruebatecnicaonoff.home.domain.IPublicationsRepository
 import com.ncrdesarrollo.pruebatecnicaonoff.home.domain.PublicationsInteractor
@@ -26,8 +27,8 @@ object PublicationsModule {
 
     @Provides
     @Singleton
-    fun providesDatasource(apiInfo: PublicationsApiService): IPublicationsDataSource =
-        PublicationsDataSource(apiInfo)
+    fun providesDatasource(apiPublications: PublicationsApiService, publicationsDao: PublicationsDao): IPublicationsDataSource =
+        PublicationsDataSource(apiPublications, publicationsDao)
 
 
     @Provides
