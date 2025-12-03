@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,6 +17,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -31,11 +35,21 @@ fun PublicationsScreen(
 ) {
 
     val uiState by viewModel.publicationsList.collectAsState()
+    var searchText by remember { mutableStateOf("") }
 
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Publicaciones") })
+            Column {
+                TopAppBar(title = { Text("Publicaciones") })
+                SearchBar(
+                    searchText = searchText,
+                    onSearchTextChanged = { searchText = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                )
+            }
         }
     ) { paddingValues ->
         Box(
@@ -52,7 +66,7 @@ fun PublicationsScreen(
                 is UiState.Success -> {
                     PublicationsList(
                         publications = state.data,
-                        modifier = modifier
+                        searchText = searchText
                     ) { id ->
                         navigateToComments(id)
                     }
@@ -82,14 +96,19 @@ fun PublicationsScreen(
 @Composable
 fun PublicationsList(
     publications: List<Publication>,
-    modifier: Modifier = Modifier,
+    searchText: String = "",
     onItemClick: (Int) -> Unit
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(vertical = 8.dp)
     ) {
-        items(publications, key = { it.id }) { publication ->
+        items(publications.filter {
+            it.title.contains(
+                searchText,
+                ignoreCase = true
+            ) || it.id.toString().contains(searchText, ignoreCase = true)
+        }, key = { it.id }) { publication ->
             PublicationItem(publication = publication) { id ->
                 onItemClick(id)
             }
