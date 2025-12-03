@@ -1,5 +1,6 @@
 package com.ncrdesarrollo.pruebatecnicaonoff.home.di
 
+import com.ncrdesarrollo.pruebatecnicaonoff.core.room.PublicationsDatabase
 import com.ncrdesarrollo.pruebatecnicaonoff.home.data.IPublicationsDataSource
 import com.ncrdesarrollo.pruebatecnicaonoff.home.data.PublicationsApiService
 import com.ncrdesarrollo.pruebatecnicaonoff.home.data.PublicationsDataSource
@@ -24,6 +25,10 @@ object PublicationsModule {
     fun providesApiPublications(retrofit: Retrofit): PublicationsApiService {
         return retrofit.create(PublicationsApiService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun providePublicationsDao(db: PublicationsDatabase) = db.publicationsDao()
 
     @Provides
     @Singleton
