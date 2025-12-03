@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.ncrdesarrollo.pruebatecnicaonoff.core.navigation.NavigationWrapper
 import com.ncrdesarrollo.pruebatecnicaonoff.home.ui.PublicationsViewModel
 import com.ncrdesarrollo.pruebatecnicaonoff.ui.theme.PruebaTecnicaONOFFTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,11 +28,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PruebaTecnicaONOFFTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                    viewModel.getPublicationsDatabase()
+                    NavigationWrapper(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
