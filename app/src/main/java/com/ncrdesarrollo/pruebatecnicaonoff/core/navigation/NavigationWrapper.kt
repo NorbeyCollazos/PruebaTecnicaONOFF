@@ -6,6 +6,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ncrdesarrollo.pruebatecnicaonoff.comments.ui.CommentsScreen
+import com.ncrdesarrollo.pruebatecnicaonoff.comments.ui.CommentsViewModel
 import com.ncrdesarrollo.pruebatecnicaonoff.home.ui.PublicationsScreen
 import com.ncrdesarrollo.pruebatecnicaonoff.home.ui.PublicationsViewModel
 
@@ -23,7 +25,10 @@ fun NavigationWrapper(modifier: Modifier) {
         }
 
         composable<CommentsView> {
-
+            val viewModel = hiltViewModel<CommentsViewModel>()
+            CommentsScreen(modifier, viewModel) {
+                navController.popBackStack()
+            }
         }
 
     }
